@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import Nav from './Nav'
 import { onhome } from './Redux/Action'
 
 
@@ -10,6 +11,7 @@ const NotFound =({ onhome, onhomeA}) =>{
     })
     return (
         <div>
+            <Nav/>
             PAGE NOT FOUND, ERROR 404
         </div>
     )

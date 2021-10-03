@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Redirect, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+// import { Redirect, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import Nav from '../Nav'
 import NotFound from '../NotFound'
 import Questionpage from '../Questionpage'
 import { getquestions, handlesubmitanswer, onhome } from '../Redux/Action'
-import templ from './logo512.png'
+// import templ from './logo512.png'
 
 
 

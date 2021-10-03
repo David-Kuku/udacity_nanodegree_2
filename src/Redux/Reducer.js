@@ -24,6 +24,7 @@ const initialState = {
     newquestionID: "",
     loading:false,
     loadingBar: loadingBarReducer,
+    auth: false
 }
 
 export const reducer = (state = initialState, action) => {
@@ -32,13 +33,15 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loggedInUser: action.payload,
+                auth: true
             }
         case LOGOUT:
             return {
                 ...state,
                 loggedInUser: "",
                 onhome: false,
-                addtoanswer: false
+                addtoanswer: false,
+                auth:false
             }
         case SET_ALL_USERS:
             return {

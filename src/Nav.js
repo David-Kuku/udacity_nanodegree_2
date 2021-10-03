@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { getquestions, logout } from './Redux/Action'
 
-const Nav = ({ logout, loggedInUser, users, onhome }) => {
+
+const Nav = ({ logout, loggedInUser, users, onhome,auth }) => {
     return (
         <>
             <div className="navbar">
@@ -11,16 +12,16 @@ const Nav = ({ logout, loggedInUser, users, onhome }) => {
                     onhome ?
                         <>
                             <div className="navbar-div" style={{ marginRight: "150px" }}>
-                                <Link to="/home"><div>Home</div></Link>
-                                <Link to="/add"><div>New Question</div></Link>
-                                <Link to ="/leaderboard"><div>Leader Board</div></Link>
+                                <NavLink to="/home"><div>Home</div></NavLink>
+                                <NavLink to="/add"><div>New Question</div></NavLink>
+                                <NavLink to ="/leaderboard"><div>Leader Board</div></NavLink>
                             </div>
                             <div className="navbar-div">
                                 {/* <img style={{height:"50px"}} src ={users[loggedInUser].avatarURL}/> */}
                                 <div>Hello {users[loggedInUser].name}</div>
-                                <Link to="/">
+                                <NavLink to="/">
                                 <div style={{ cursor: "pointer" }} onClick={logout}>Logout</div>
-                                </Link>
+                                </NavLink>
                                 
                             </div>
                         </> :
@@ -44,7 +45,8 @@ const mapStateToProps = (state) => {
     return {
         loggedInUser: state.loggedInUser,
         users: state.users,
-        onhome: state.onhome
+        onhome: state.onhome,
+        auth: state.auth
 
     }
 }

@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { Redirect, useHistory } from 'react-router-dom'
-import { handleaddquestion } from './Redux/Action'
+import { useHistory } from 'react-router-dom'
+import Nav from './Nav'
+import { handleaddquestion, onhome } from './Redux/Action'
 
 
-const CreateQuestion = ({ handleaddquestion, loggedInUser }) => {
+const CreateQuestion = ({ handleaddquestion, onhomeA, onhome }) => {
+    useEffect(()=>{
+        !onhome && onhomeA()
+    })
+
     const [optionOneText, setOptionOneText] = useState("")
     const [optionTwoText, setOptionTwoText] = useState("")
 
@@ -21,12 +26,9 @@ const CreateQuestion = ({ handleaddquestion, loggedInUser }) => {
         }, 1000)
     }
 
-    useEffect(() => {
-        if (!loggedInUser) {
-            history.push('/')
-        }
-    })
     return (
+        <>
+        <Nav />
         <div className="create-box">
             <div style=
                 {{
@@ -65,18 +67,22 @@ const CreateQuestion = ({ handleaddquestion, loggedInUser }) => {
                 style={{ cursor: "pointer", width: "92%", margin: "13px", backgroundColor: "green", height: "30px", borderRadius: "5px", color: "white" }}><b>Submit</b></button>
 
         </div>
+        </>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        loggedInUser: state.loggedInUser
+        loggedInUser: state.loggedInUser,
+        auth: state.auth,
+        onhome: state.onhome
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleaddquestion: (option1, option2) => { dispatch(handleaddquestion(option1, option2)) }
+        handleaddquestion: (option1, option2) => { dispatch(handleaddquestion(option1, option2)) },
+        onhomeA: () => {dispatch(onhome())}
     }
 }
 

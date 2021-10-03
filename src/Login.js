@@ -2,19 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setloggedinuser, onhome } from './Redux/Action'
 import { Link } from 'react-router-dom'
+import Nav from './Nav'
+
 
 const Login = ({users, loggedInUser, setloggedinuser, onhome }) => {
 
     let path = "/"
     if (loggedInUser) {
         path = "/home"
-    }
-
-    const handlenavchange = () => {
-        if (loggedInUser) {
-            onhome()
-        }
-
     }
 
 
@@ -26,6 +21,8 @@ const Login = ({users, loggedInUser, setloggedinuser, onhome }) => {
     const allusers = Object.keys(users)
     console.log(allusers)
     return (
+        <>
+        <Nav />
         <div className="login-box">
             <div style=
                 {{
@@ -61,11 +58,12 @@ const Login = ({users, loggedInUser, setloggedinuser, onhome }) => {
 
             </div>
             <Link to={path}>
-                <button className="button" type="submit" onClick={() => { handlenavchange(); handleemptylogin() }}>
+                <button disabled={!loggedInUser} className="button" type="submit" onClick={() =>{handleemptylogin(); onhome()}}>
                     Sign in
                 </button>
             </Link>
         </div>
+        </>
     )
 }
 

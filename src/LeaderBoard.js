@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import Nav from './Nav'
+import { onhome } from './Redux/Action'
 
-const LeaderBoard = ({ users, loggedInUser }) => {
-    let history = useHistory()
-    useEffect(()=>{
-        if(!loggedInUser){    
-            history.push('/add')    
-        }
-    })
 
+const LeaderBoard = ({ users, onhome, onhomeA }) => {
     let sortedusers
     sortedusers = Object.keys(users).sort((a,b) => ((Object.keys(users[b].answers).length) + users[b].questions.length) - ((Object.keys(users[a].answers).length) + users[a].questions.length))
+
+    useEffect(()=>{
+        !onhome && onhomeA()
+    })
     return (
+        <>
+        <Nav />
         <div className="leader-board">
             {sortedusers.map((user) => {
                 return (
@@ -48,18 +49,21 @@ const LeaderBoard = ({ users, loggedInUser }) => {
                 )
             })}
         </div>
+        </>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
         users: state.users,
-        loggedInUser: state.loggedInUser
+        loggedInUser: state.loggedInUser,
+        auth: state.auth,
+        onhome: state.onhome
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        onhomeA: () => {dispatch(onhome())}
     }
 }
 

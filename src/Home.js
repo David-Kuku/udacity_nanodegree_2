@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import AnsweredQuestions from './AnsweredQuestions'
-import { questionstodisplay } from './Redux/Action'
+import Nav from './Nav'
+import { onhome, questionstodisplay } from './Redux/Action'
 import UnansweredQuestions from './UnansweredQuestions'
 
 
-const Home = ({questions, loggedInUser, users, questionstodisplay, questions_to_display}) => {
+const Home = ({questions, loggedInUser, users, questionstodisplay, questions_to_display, onhomeA, onhome}) => {
 
-    let history = useHistory()
     useEffect(()=>{
-        if(!loggedInUser){
-            history.push('/')
-        }
-        console.log(loggedInUser)
-    }, [])
+        !onhome && onhomeA()
+    })
 
     let unans, ans
 
@@ -26,7 +22,10 @@ const Home = ({questions, loggedInUser, users, questionstodisplay, questions_to_
     }
     console.log(questions)
     console.log(users[loggedInUser])
+
     return (
+        <>
+        <Nav />
         <div className="home-box">
             <div style=
                 {{
@@ -68,6 +67,7 @@ const Home = ({questions, loggedInUser, users, questionstodisplay, questions_to_
                 }
             </div>
         </div>
+        </>
     )
 }
 
@@ -76,7 +76,9 @@ const mapStateToProps=(state)=>{
         loggedInUser: state.loggedInUser,
         users: state.users,
         questionstodisplay: state.questionstodisplay,
-        questions: state.questions
+        questions: state.questions,
+        auth: state.auth,
+        onhome: state.onhome
         
     }
 }
@@ -84,7 +86,7 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
     return{
         questions_to_display: (value) =>{ dispatch(questionstodisplay(value))},
-        
+        onhomeA: () => {dispatch(onhome())}
     }
 }
 
